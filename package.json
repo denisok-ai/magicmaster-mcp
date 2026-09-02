@@ -1,0 +1,29 @@
+{
+  "name": "magicmaster-mcp",
+  "version": "0.3.0",
+  "description": "Magic Master MCP — audio mastering (LUFS/True Peak), Suno/Udio AI-fingerprint removal for AI agents. Thin stdio bridge to the hosted server https://magicmaster.pro/mcp",
+  "bin": {
+    "magicmaster-mcp": "bin/magicmaster-mcp.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "audio",
+    "mastering",
+    "lufs",
+    "suno",
+    "udio",
+    "music",
+    "ai-agents"
+  ],
+  "homepage": "https://magicmaster.pro/mcp",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/denisok-ai/magicmaster-mcp"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "mcpName": "pro.magicmaster/mastering"
+}
