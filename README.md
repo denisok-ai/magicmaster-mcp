@@ -51,7 +51,11 @@ claude mcp add --transport http magicmaster https://magicmaster.pro/mcp
 { "mcpServers": { "magicmaster": { "command": "npx", "args": ["-y", "mcp-remote", "https://magicmaster.pro/mcp/oauth"] } } }
 ```
 
-or `npx -y github:denisok-ai/magicmaster-mcp` (a one-line wrapper around the same bridge).
+or the npm package — `npx -y magicmaster-mcp` ([magicmaster-mcp on npm](https://www.npmjs.com/package/magicmaster-mcp)), a one-line wrapper around the same bridge:
+
+```json
+{ "mcpServers": { "magicmaster": { "command": "npx", "args": ["-y", "magicmaster-mcp"] } } }
+```
 
 ## Tools
 
