@@ -67,9 +67,19 @@ docker run -i --rm magicmaster-mcp
 ```
 
 The image holds only the bridge — the server itself stays hosted at
-`https://magicmaster.pro/mcp`. Point the bridge at the anonymous endpoint with
-`-e MAGICMASTER_MCP_URL=https://magicmaster.pro/mcp` if you only need the free
-tools; the default is the OAuth endpoint, which also unlocks the paid ones.
+`https://magicmaster.pro/mcp`. It is built from this repository (`npm ci`), so
+`mcp-remote` is baked in and the container needs no registry at run time — only
+outbound HTTPS to `magicmaster.pro`. The image defaults to the anonymous
+endpoint (free tools, no sign-in); switch it to the OAuth endpoint, which also
+unlocks the paid tools, with
+`-e MAGICMASTER_MCP_URL=https://magicmaster.pro/mcp/oauth`.
+
+Build spec for a Glama release (the platform configures the recipe on its side,
+it does not read this Dockerfile):
+
+- build steps: `npm ci --omit=dev`
+- start command: `node bin/magicmaster-mcp.js`
+- environment: `MAGICMASTER_MCP_URL=https://magicmaster.pro/mcp`
 
 ## Tools
 

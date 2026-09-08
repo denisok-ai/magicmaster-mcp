@@ -7,17 +7,24 @@
 # которая по контейнеру гоняет проверки безопасности и оценку инструментов.
 FROM node:22-alpine
 
-# Пакет-мост тянем из npm по точной версии: образ должен быть воспроизводимым,
-# а не собирать «что окажется в реестре в день сборки».
-RUN npm install -g magicmaster-mcp@0.3.0 mcp-remote@0.8.3
+WORKDIR /app
 
-# Адрес по умолчанию — точка с OAuth: бесплатные инструменты работают и без
-# ключа, а платные заставляют клиента пройти авторизацию самому. Переопределить
-# на анонимную точку: -e MAGICMASTER_MCP_URL=https://magicmaster.pro/mcp
-ENV MAGICMASTER_MCP_URL=https://magicmaster.pro/mcp/oauth
+# Собираем из исходников репозитория, а не из опубликованного пакета: сборщик
+# Glama выкачивает именно репозиторий, и образ обязан получаться тем же путём,
+# каким его собирает он. `npm ci` берёт точные версии из package-lock.json.
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev && npm cache clean --force
+COPY bin ./bin
+COPY README.md LICENSE ./
+
+# Адрес по умолчанию — анонимная точка: бесплатные инструменты (анализ, снятие
+# следа ИИ, прайс, лимиты) работают без ключа, и автоматическая проверка сборки
+# проходит рукопожатие сама. Точка с OAuth требует живого человека в браузере:
+# -e MAGICMASTER_MCP_URL=https://magicmaster.pro/mcp/oauth
+ENV MAGICMASTER_MCP_URL=https://magicmaster.pro/mcp
 
 # Непривилегированный пользователь: образ ходит только наружу по HTTPS,
 # и никаких прав ему для этого не нужно.
 USER node
 
-ENTRYPOINT ["magicmaster-mcp"]
+ENTRYPOINT ["node", "bin/magicmaster-mcp.js"]
