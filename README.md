@@ -57,6 +57,20 @@ or the npm package — `npx -y magicmaster-mcp` ([magicmaster-mcp on npm](https:
 { "mcpServers": { "magicmaster": { "command": "npx", "args": ["-y", "magicmaster-mcp"] } } }
 ```
 
+## Docker
+
+For clients without Node, and for the Glama build that runs security checks:
+
+```bash
+docker build -t magicmaster-mcp .
+docker run -i --rm magicmaster-mcp
+```
+
+The image holds only the bridge — the server itself stays hosted at
+`https://magicmaster.pro/mcp`. Point the bridge at the anonymous endpoint with
+`-e MAGICMASTER_MCP_URL=https://magicmaster.pro/mcp` if you only need the free
+tools; the default is the OAuth endpoint, which also unlocks the paid ones.
+
 ## Tools
 
 | Tool | What it does | Cost |
